@@ -740,7 +740,7 @@ button { font: inherit; }
   opacity: 0.72;
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1023px), (pointer: coarse) and (orientation: landscape) and (max-height: 600px) {
   .pull-refresh {
     --pull-distance: 0px;
 
@@ -1051,6 +1051,71 @@ button { font: inherit; }
     line-height: 28px;
   }
 
+}
+
+/* Keep a portrait-width layout on phones held sideways. */
+@media (max-width: 1023px) and (orientation: landscape),
+       (pointer: coarse) and (orientation: landscape) and (max-height: 600px) {
+  :root {
+    --portrait-column-width: clamp(320px, 100svh, 390px);
+  }
+
+  body {
+    width: var(--portrait-column-width);
+    min-width: 0;
+    margin-inline: auto;
+  }
+
+  body[data-page='home'] {
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .hero {
+    height: max(100svh, calc(var(--portrait-column-width) * 2));
+  }
+
+  .hero__stage { --stage-width: var(--portrait-column-width); }
+
+  .hero__actions {
+    bottom: calc(56px + var(--portrait-column-width) * 28 / 390);
+    width: calc(var(--portrait-column-width) * 208 / 390);
+  }
+
+  .hero__contacts {
+    gap: calc(var(--portrait-column-width) * 48 / 390);
+    font-size: calc(var(--portrait-column-width) * 16 / 390);
+    line-height: calc(var(--portrait-column-width) * 28 / 390);
+  }
+
+  .outline-button {
+    min-height: 44px;
+    padding: 14px 12px;
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .showreel-card { padding-block: 16px; }
+
+  .showreel-card__media {
+    width: min(100%, calc((100svh - 88px) * 361 / 638));
+    margin-inline: auto;
+    flex-shrink: 0;
+  }
+
+  .showreel-card h2 { text-align: center; }
+
+  .gallery-card,
+  .gallery-card--landscape {
+    width: min(calc(var(--portrait-column-width) - 32px), 328px, calc((100svh - 64px) * 11 / 8));
+  }
+
+  .contact-dialog {
+    width: var(--portrait-column-width);
+    margin-inline: auto;
+  }
+
+  .contact-dialog__close { top: 16px; }
 }
 
 @keyframes mobile-scroll-hint {

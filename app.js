@@ -1,8 +1,6 @@
-const MOBILE_LAYOUT_QUERY = '(max-width: 1023px), (pointer: coarse) and (orientation: landscape) and (max-height: 600px)'
-
 const SOCIAL_LINKS = {
-  telegram: 'https://t.me/santa_jackson',
-  instagram: 'https://www.instagram.com/santa_jackson?igsi=MXhzbGswcnd6OHBvaA%3D%3D&utm_source=qr',
+  telegram: 'https://t.me/rafiskkamalove_bot',
+  instagram: 'https://www.instagram.com/rafis.kamalove',
   phone: 'tel:+79869119192',
 }
 
@@ -119,7 +117,7 @@ function resetPullRefresh() {
 
 function handlePullRefreshStart(event) {
   if (
-    !window.matchMedia(MOBILE_LAYOUT_QUERY).matches ||
+    !window.matchMedia('(max-width: 1023px)').matches ||
     document.body.dataset.page === 'gallery' ||
     contactDialog?.open ||
     pullRefresh.classList.contains('is-refreshing') ||
@@ -308,7 +306,7 @@ function scheduleMobileScrollHint() {
   mobileScrollHintTimer = window.setTimeout(() => {
     if (
       document.body.dataset.page !== 'showreel' ||
-      !window.matchMedia(MOBILE_LAYOUT_QUERY).matches ||
+      !window.matchMedia('(max-width: 1023px)').matches ||
       mobileFeedInteracted ||
       mobileFeed.scrollTop > 1
     ) {
@@ -362,7 +360,7 @@ function scheduleDesktopScrollHint() {
   desktopScrollHintTimer = window.setTimeout(() => {
     if (
       document.body.dataset.page !== 'showreel' ||
-      window.matchMedia(MOBILE_LAYOUT_QUERY).matches ||
+      window.matchMedia('(max-width: 1023px)').matches ||
       desktopShowreelInteracted ||
       desktopSwitchInProgress ||
       document.visibilityState !== 'visible'
@@ -429,7 +427,7 @@ function scheduleDesktopScrollHint() {
 function handleDesktopWheel(event) {
   if (
     document.body.dataset.page !== 'showreel' ||
-    window.matchMedia(MOBILE_LAYOUT_QUERY).matches ||
+    window.matchMedia('(max-width: 1023px)').matches ||
     Math.abs(event.deltaY) < 16
   ) {
     return
@@ -467,7 +465,7 @@ function returnDesktopVideoFromSwipe(offset) {
 
 function startDesktopSwipe(event) {
   if (
-    window.matchMedia(MOBILE_LAYOUT_QUERY).matches ||
+    window.matchMedia('(max-width: 1023px)').matches ||
     desktopSwitchInProgress ||
     (event.pointerType === 'mouse' && event.button !== 0)
   ) {
@@ -554,7 +552,7 @@ function getMobileGalleryScale(distance) {
 
 function createMobileGalleryLayout(activeIndex) {
   const count = galleryCards.length
-  const gap = Math.max(18, Math.min(26, galleryViewport.clientWidth * 0.064))
+  const gap = Math.max(18, Math.min(26, window.innerWidth * 0.064))
   const layout = galleryCards.map((card, index) => {
     const offset = getGalleryOffset(index, activeIndex)
     const distance = Math.abs(offset)
@@ -590,7 +588,7 @@ function createMobileGalleryLayout(activeIndex) {
 }
 
 function createGalleryLayout(activeIndex) {
-  const isMobile = window.matchMedia(MOBILE_LAYOUT_QUERY).matches
+  const isMobile = window.matchMedia('(max-width: 1023px)').matches
   const cacheKey = `${isMobile ? 'mobile' : 'desktop'}-${activeIndex}`
   const cachedLayout = galleryLayoutCache.get(cacheKey)
   if (cachedLayout) return cachedLayout
@@ -636,7 +634,7 @@ function createGalleryLayout(activeIndex) {
 }
 
 function loadNearbyGalleryImages() {
-  const isMobile = window.matchMedia(MOBILE_LAYOUT_QUERY).matches
+  const isMobile = window.matchMedia('(max-width: 1023px)').matches
   const preloadDistance = isMobile ? 5 : 2
   galleryImages.forEach((image, index) => {
     if (Math.abs(getGalleryOffset(index)) > preloadDistance) return
@@ -648,7 +646,7 @@ function loadNearbyGalleryImages() {
 
 function getGalleryScrollStep() {
   return window.innerHeight * (
-    window.matchMedia(MOBILE_LAYOUT_QUERY).matches
+    window.matchMedia('(max-width: 1023px)').matches
       ? MOBILE_GALLERY_SCROLL_STEP
       : 0.55
   )
@@ -656,7 +654,7 @@ function getGalleryScrollStep() {
 
 function updateGalleryScrollHeight() {
   if (!galleryPage) return
-  const scrollPositions = window.matchMedia(MOBILE_LAYOUT_QUERY).matches
+  const scrollPositions = window.matchMedia('(max-width: 1023px)').matches
     ? 0
     : galleryCards.length * GALLERY_LOOP_CYCLES
   const scrollDistance = getGalleryScrollStep() * scrollPositions
@@ -678,13 +676,13 @@ function setPageScrollPositionInstantly(top) {
 }
 
 function getGalleryScrollTop() {
-  return window.matchMedia(MOBILE_LAYOUT_QUERY).matches
+  return window.matchMedia('(max-width: 1023px)').matches
     ? galleryViewport.scrollTop
     : window.scrollY
 }
 
 function setGalleryScrollPositionInstantly(top) {
-  if (!window.matchMedia(MOBILE_LAYOUT_QUERY).matches) {
+  if (!window.matchMedia('(max-width: 1023px)').matches) {
     setPageScrollPositionInstantly(top)
     return
   }
@@ -696,7 +694,7 @@ function setGalleryScrollPositionInstantly(top) {
 }
 
 function scrollGalleryTo(top, behavior = 'auto') {
-  if (window.matchMedia(MOBILE_LAYOUT_QUERY).matches) {
+  if (window.matchMedia('(max-width: 1023px)').matches) {
     galleryViewport.scrollTo({ top, left: 0, behavior })
     return
   }
@@ -761,7 +759,7 @@ function renderGallery({ announce = false } = {}) {
 function syncGalleryToPageScroll() {
   galleryScrollFrame = undefined
   if (document.body.dataset.page !== 'gallery') return
-  if (window.matchMedia(MOBILE_LAYOUT_QUERY).matches) return
+  if (window.matchMedia('(max-width: 1023px)').matches) return
   const step = getGalleryScrollStep()
   const rawPosition = step > 0 ? getGalleryScrollTop() / step : 0
   galleryScrollTarget = rawPosition
@@ -829,7 +827,7 @@ function navigateMobileGallery(direction, { sound = true } = {}) {
 function startMobileGalleryDrag(event) {
   if (
     document.body.dataset.page !== 'gallery' ||
-    !window.matchMedia(MOBILE_LAYOUT_QUERY).matches ||
+    !window.matchMedia('(max-width: 1023px)').matches ||
     event.pointerType === 'mouse' && event.button !== 0
   ) return
 
@@ -881,7 +879,7 @@ function finishMobileGalleryDrag(event) {
 function handleMobileGalleryWheel(event) {
   if (
     document.body.dataset.page !== 'gallery' ||
-    !window.matchMedia(MOBILE_LAYOUT_QUERY).matches ||
+    !window.matchMedia('(max-width: 1023px)').matches ||
     Math.abs(event.deltaY) < 8
   ) return
 
@@ -896,7 +894,7 @@ function navigateGalleryFromTap(event) {
   if (!galleryViewport || !galleryCards.length) return
 
   const bounds = galleryViewport.getBoundingClientRect()
-  const isMobile = window.matchMedia(MOBILE_LAYOUT_QUERY).matches
+  const isMobile = window.matchMedia('(max-width: 1023px)').matches
   const direction = isMobile
     ? event.clientY < bounds.top + bounds.height / 2 ? -1 : 1
     : event.clientX < bounds.left + bounds.width / 2 ? -1 : 1
@@ -941,7 +939,7 @@ function renderPage(page) {
     requestAnimationFrame(() => setPageScrollPositionInstantly(0))
   }
 
-  if (isShowreel && window.matchMedia(MOBILE_LAYOUT_QUERY).matches) {
+  if (isShowreel && window.matchMedia('(max-width: 1023px)').matches) {
     cancelDesktopScrollHint()
     mobileFeedInteracted = false
     mobileScrollHintPlayed = false
@@ -961,7 +959,7 @@ function renderPage(page) {
 
   if (isGallery) {
     requestAnimationFrame(() => {
-      const isMobileGallery = window.matchMedia(MOBILE_LAYOUT_QUERY).matches
+      const isMobileGallery = window.matchMedia('(max-width: 1023px)').matches
       activeGalleryImage = 4
       galleryScrollPosition = activeGalleryImage
       galleryScrollTarget = galleryScrollPosition
@@ -1001,7 +999,7 @@ function getPageFromLocation() {
 }
 
 function clearMobileActionState() {
-  if (!window.matchMedia(MOBILE_LAYOUT_QUERY).matches) return
+  if (!window.matchMedia('(max-width: 1023px)').matches) return
 
   const activeElement = document.activeElement
   if (activeElement instanceof HTMLElement) activeElement.blur()
@@ -1341,7 +1339,7 @@ document.querySelectorAll('.site-header button, .site-header a').forEach((item) 
 
 document.querySelectorAll('[data-page-target]').forEach((button) => {
   button.addEventListener('click', () => {
-    if (window.matchMedia(MOBILE_LAYOUT_QUERY).matches) playHapticSound()
+    if (window.matchMedia('(max-width: 1023px)').matches) playHapticSound()
     navigateToPage(button.dataset.pageTarget)
     requestAnimationFrame(clearMobileActionState)
   })
@@ -1390,7 +1388,7 @@ const mobileCardObserver = new IntersectionObserver(
   (entries) => {
     if (
       document.body.dataset.page !== 'showreel' ||
-      !window.matchMedia(MOBILE_LAYOUT_QUERY).matches
+      !window.matchMedia('(max-width: 1023px)').matches
     ) {
       return
     }
@@ -1458,7 +1456,7 @@ window.addEventListener('keydown', (event) => {
 
   if (document.body.dataset.page !== 'showreel') return
 
-  if (window.matchMedia(MOBILE_LAYOUT_QUERY).matches) {
+  if (window.matchMedia('(max-width: 1023px)').matches) {
     if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
       event.preventDefault()
       scrollToMobileShowreel(activeShowreel - 1)
@@ -1494,7 +1492,7 @@ window.addEventListener('resize', () => {
   galleryImagesInitialized = false
   updateGalleryScrollHeight()
   measureGalleryCards()
-  const nextScrollPosition = window.matchMedia(MOBILE_LAYOUT_QUERY).matches
+  const nextScrollPosition = window.matchMedia('(max-width: 1023px)').matches
     ? normalizeGalleryIndex(galleryScrollPosition)
     : GALLERY_CENTER_CYCLE * galleryCards.length + normalizeGalleryIndex(galleryScrollPosition)
   galleryScrollPosition = nextScrollPosition
@@ -1521,7 +1519,7 @@ document.addEventListener('visibilitychange', () => {
 window.addEventListener('load', () => {
   if (
     document.body.dataset.page === 'showreel' &&
-    window.matchMedia(MOBILE_LAYOUT_QUERY).matches
+    window.matchMedia('(max-width: 1023px)').matches
   ) {
     mobileFeedInteracted = false
     mobileScrollHintPlayed = false
